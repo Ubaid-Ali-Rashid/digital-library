@@ -1,0 +1,420 @@
+MDBoxLayout:
+    orientation: 'vertical'
+
+    MDTopAppBar:
+        title: 'Book Library'
+        right_action_items: [['theme-light-dark', lambda x: app.change_theme()]]
+
+    ScreenManager:
+        id: ScreenManager
+        LoginScreen:
+        SignUpScreen:
+        SemesterScreen:
+        BookScreen:
+        PdfScreen:
+        AdminScreen:
+        UserDetailScreen:
+        AddBookScreen1:
+        ChangeUserStatusScreen:
+        DeleteUserScreen:
+        AddBookScreen2:
+        AddBookScreen3:
+
+
+<LoginScreen>:
+    name: 'login'
+    MDBoxLayout:
+        orientation: 'vertical'
+        size: root.width, root.height
+        spacing: 10
+
+
+        MDFloatLayout:
+
+            MDTextField:
+                multiline: False
+                pos_hint: {'center_x': .5, 'center_y': .8}
+                id: registration
+                hint_text: 'Reg-No(2024-CE-00)'
+                icon_right: 'card-account-details'
+                size_hint_x: .6
+
+            MDTextField:
+                multiline: False
+                size_hint_x: .6
+                pos_hint: {'center_x': .5, 'center_y': .65}
+                id: name
+                hint_text: 'Name'
+                icon_right: 'account'
+
+            MDRaisedButton:
+                id: submit
+                text: 'Submit'
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                on_release:
+                    app.submit()
+                    root.manager.transition.direction= 'left'
+
+            MDTextButton:
+                id: 'SignUp'
+                text: "Don't have an account? [color=0000ff]Sign up[/color]"
+                markup: True
+                pos_hint: {'center_x': .5, 'center_y': .435}
+                font_size: 15
+                color: (131/255,132/255,132/255,1)
+                on_release: app.go_to_sign_up()
+
+<SignUpScreen>:
+    name: 'SignUp'
+    MDBoxLayout:
+        orientation: 'vertical'
+        size: root.width, root.height
+        spacing: 10
+
+
+        MDFloatLayout:
+            MDTextField:
+                multiline: False
+                pos_hint: {'center_x': .5, 'center_y': .8}
+                id: registration
+                hint_text: 'Enter Reg-No(2024-CE-00)'
+                size_hint_x: .6
+
+            MDTextField:
+                multiline: False
+                size_hint_x: .6
+                pos_hint: {'center_x': .5, 'center_y': .65}
+                id: name
+                hint_text: 'Enter Name'
+
+            MDRaisedButton:
+                id: 'CreateAccount'
+                text: 'Create Account'
+                pos_hint: {'center_x': .5, 'center_y': .5}
+                on_release: app.create_account()
+
+
+<SemesterScreen>:
+    name: 'SemesterSelect'
+    MDFloatLayout:
+        Spinner:
+            id: Semester_spinner
+            text: 'Select Semester'
+            values: ['Semester 1','Semester 2','Semester 3','Semester 4','Semester 5','Semester 6','Semester 7','Semester 8']
+            size_hint: (.7,.1)
+            pos_hint: {'center_x': .5, 'center_y': .7}
+
+    MDRaisedButton:
+        id: load_books
+        text: 'Load Books'
+        size_hint: (.68,.1)
+        pos_hint: {'center_x': .5, 'center_y': .5}
+        on_release:
+            app.books_page()
+            root.manager.transition.direction = 'left'
+
+    MDIconButton:
+        id: log_out
+        icon: 'logout'
+        pos_hint: {'center_x': .92, 'center_y': .035}
+        on_release:
+            app.log_out()
+            root.manager.transition.direction = 'right'
+
+
+
+<BookScreen>:
+    name: 'Books_Screen'
+    MDBoxLayout:
+        orientation: 'vertical'
+
+
+        MDList:
+            id: book_list
+
+        MDLabel:
+            id: label_no_pdf
+            halign: 'center'
+
+        MDRaisedButton:
+            text: '<'
+            on_release:
+                app.go_back('SemesterSelect')
+                root.manager.transition.direction = 'right'
+    MDFloatLayout:
+        MDIconButton:
+            id: log_out
+            icon: 'logout'
+            pos_hint: {'center_x': .92, 'center_y': .035}
+            on_release:
+                app.log_out()
+                root.manager.transition.direction = 'right'
+
+<PdfScreen>:
+    name: 'Pdfs'
+    MDBoxLayout:
+        orientation: 'vertical'
+
+        ScrollView:
+            MDList:
+                id: pdf_list
+
+        MDRaisedButton:
+            text: '<'
+            on_release:
+                app.go_back('Books_Screen')
+    MDFloatLayout:
+        MDIconButton:
+            id: log_out
+            icon: 'logout'
+            pos_hint: {'center_x': .92, 'center_y': .035}
+            on_release:
+                app.log_out()
+                root.manager.transition.direction = 'right'
+
+
+<AdminScreen>:
+    name: 'Admin'
+    MDFloatLayout:
+
+        Spinner:
+            id: admin_spinner
+            text: 'Select Option Here'
+            values: ['Add Book', 'Delete User', 'Check Users Details', 'Change User Status']
+            size_hint: .7,.1
+            pos_hint: {"center_x": .5,'center_y': .7}
+
+        MDRaisedButton:
+            id: admin_options
+            text: 'Go Next'
+            size_hint: (.68, .1)
+            pos_hint: {'center_x': .5,'center_y': .5}
+            on_release:
+                app.go_to_admin_options_screen()
+                root.manager.transition.direction = 'left'
+
+        MDIconButton:
+            id: log_out
+            icon: 'logout'
+            pos_hint: {'center_x': .92, 'center_y': .035}
+            on_release:
+                app.log_out()
+                root.manager.transition.direction = 'right'
+
+
+
+<UserDetailScreen>:
+    name: 'UserDetails'
+    MDFloatLayout:
+
+        MDRaisedButton:
+            text: '<'
+            pos_hint: {'center_x': .08,'center_y': .035}
+            on_release:
+                app.go_back('Admin')
+                root.manager.transition.direction = 'right'
+
+        MDIconButton:
+            id: log_out
+            icon: 'logout'
+            pos_hint: {'center_x': .92, 'center_y': .035}
+            on_release:
+                app.log_out()
+                root.manager.transition.direction = 'right'
+
+
+<ChangeUserStatusScreen>:
+    name: 'ChangeUserStatus'
+    MDFloatLayout:
+
+        MDTextField:
+            id: registration
+            multiline: False
+            hint_text: 'Enter Reg No. (2024-CE-00)'
+            icon_right: 'card-account-details'
+            size_hint_x: .7
+            pos_hint: {'center_x': .5, 'center_y': .7}
+
+        MDRaisedButton:
+            id: Status
+            text: 'Check Status'
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            on_release: app.change_status()
+
+
+        MDRaisedButton:
+            text: '<'
+            pos_hint: {'center_x': .08, 'center_y':.035}
+            on_release:
+                app.go_back('Admin')
+                root.manager.transition.direction = 'right'
+
+        MDIconButton:
+            id: log_out
+            icon: 'logout'
+            pos_hint: {'center_x': .92, 'center_y': .035}
+            on_release:
+                app.log_out()
+                root.manager.transition.direction = 'right'
+
+
+<DeleteUserScreen>:
+    name: 'DeleteUser'
+    MDFloatLayout:
+
+        MDTextField:
+            id: registration
+            multiline: False
+            hint_text: 'Enter Reg No. (2024-CE-00)'
+            icon_right: 'card-account-details'
+            size_hint_x: .7
+            pos_hint: {'center_x': .5, 'center_y': .7}
+
+        MDRaisedButton:
+            id: Delete
+            text: 'Delete User'
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            on_release: app.Delete_User()
+
+        MDRaisedButton:
+            text: '<'
+            pos_hint: {'center_x':.08,'center_y': .035}
+            on_release:
+                app.go_back('Admin')
+                root.manager.transition.direction = 'right'
+
+        MDIconButton:
+            id: log_out
+            icon: 'logout'
+            pos_hint: {'center_x': .92, 'center_y': .035}
+            on_release:
+                app.log_out()
+                root.manager.transition.direction = 'right'
+
+
+<AddBookScreen1>:
+    name: 'AddBook'
+    MDFloatLayout:
+        Spinner:
+            id: semester_select
+            text: 'Select Semester'
+            values: ['Semester 1','Semester 2','Semester 3','Semester 4','Semester 5','Semester 6','Semester 7','Semester 8']
+            size_hint: (.7,.1)
+            pos_hint: {'center_x': .5, 'center_y': .7}
+        MDGridLayout:
+            cols: 2
+            pos_hint: {'center_x': .4, 'center_y': .5}
+            size_hint: .6,0.25
+
+            CheckBox:
+                id: select_book
+                group: 'Book Select'
+                color: 37/255, 150/255, 190/255, 1
+
+            MDLabel:
+                text: 'Select Book Name'
+                font_size: 20
+
+            CheckBox:
+                id: enter_book
+                group: 'Book Select'
+                color: 37/255, 150/255, 190/255,1
+
+            MDLabel:
+                text: 'Enter New Book'
+                font_size: 20
+
+        MDRaisedButton:
+            id: Add
+            text: 'Go Next'
+            on_release:
+                app.add_book()
+                root.manager.transition.direction = 'left'
+            pos_hint: {'center_x': .5,'center_y': .35}
+
+
+        MDRaisedButton:
+            text: '<'
+            on_release:
+                app.go_back('Admin')
+                root.manager.transition.direction = 'right'
+            pos_hint: {'center_x': .08, 'center_y': .035}
+
+        MDIconButton:
+            id: log_out
+            icon: 'logout'
+            pos_hint: {'center_x': .92, 'center_y': .035}
+            on_release:
+                app.log_out()
+                root.manager.transition.direction = 'right'
+
+<AddBookScreen2>:
+    name: 'AddBook2'
+    MDFloatLayout:
+
+        MDRaisedButton:
+            id: pdf_picker
+            text: 'Select File'
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            size_hint_x: .5
+            on_release:
+                app.select_file()
+                root.manager.transition.direction= 'left'
+
+        MDLabel:
+            font_size: 15
+            text: 'Not Selected'
+            pos_hint: {'center_x': .5, 'center_y': .45}
+            halign: 'center'
+            id: file_name
+
+        MDRaisedButton:
+            id: save
+            text: 'Save Pdf'
+            size_hint_x: .5
+            pos_hint: {'center_x': .5, 'center_y': .35}
+            on_release: app.add_in_db()
+
+
+        MDRaisedButton:
+            text: '<'
+            on_release:
+                app.go_back('AddBook1')
+                root.manager.transition.direction = 'right'
+            pos_hint: {'center_x':.08, 'center_y': .035}
+
+        MDIconButton:
+            id: log_out
+            icon: 'logout'
+            pos_hint: {'center_x': .92, 'center_y': .035}
+            on_release:
+                app.log_out()
+                root.manager.transition.direction = 'right'
+
+
+
+<AddBookScreen3>:
+    name: 'AddBook3'
+    MDFloatLayout:
+        FileChooserIconView:
+            id: file_chooser
+            on_selection:
+                app.save_file(file_chooser.selection)
+
+
+
+
+        MDRaisedButton:
+            text: '<'
+            on_release:
+                app.go_back('AddBook2')
+                root.manager.transition.direction = 'right'
+            pos_hint: {'center_x':.08, 'center_y': .035}
+
+        MDIconButton:
+            id: log_out
+            icon: 'logout'
+            pos_hint: {'center_x': .92, 'center_y': .035}
+            on_release:
+                app.log_out()
+                root.manager.transition.direction = 'right'
